@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/avatarImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/avatarmale"/>
+
+    <TextView
+        android:id="@+id/levelTextView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/avatarImageView"
+        android:layout_toEndOf="@id/avatarImageView"
+        android:layout_marginTop="10dp"
+        android:text="Level 1"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+
+    <ProgressBar
+        android:id="@+id/expProgressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/avatarImageView"
+        android:layout_toEndOf="@id/avatarImageView"
+        android:layout_below="@id/levelTextView"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:progress="0"
+        />
+
+    <Button
+        android:id="@+id/questButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:text="Quests"
+        />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/questButton"
+        android:text="Start Run!"
+        />
+
+</RelativeLayout>
