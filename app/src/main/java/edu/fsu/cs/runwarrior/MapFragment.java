@@ -67,8 +67,6 @@ public class MapFragment extends Fragment {
                 }
 
                 LatLng currentLoc = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-                mGoogleMap.addMarker(new MarkerOptions().position(currentLoc)
-                .title("Start Point"));
 
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(currentLoc).build();
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 18.0f));
