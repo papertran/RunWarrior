@@ -1,18 +1,25 @@
 package edu.fsu.cs.runwarrior;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 
 public class MapsActivity extends FragmentActivity implements
-        BottomPanelFragment.BottomPanelFragmentListener {
+        BottomPanelFragment.BottomPanelFragmentListener,
+        BottomPanelStartRunFragment.BottomPanelFragmentStartRunListener {
     // https://www.youtube.com/watch?v=i22INe14JUc&t=16s
     // How to implement / use interfaces for fragment communication
 
@@ -27,6 +34,8 @@ public class MapsActivity extends FragmentActivity implements
     public static final String USER_WEIGHT = "USER_WEIGHT";
     // Int
     public static final String USER_SEX = "USER_SEX";
+
+    private final String TAG = MapsActivity.class.getCanonicalName();
 
 
     @Override
@@ -43,6 +52,13 @@ public class MapsActivity extends FragmentActivity implements
         if(!isCreated){
             setContentView(R.layout.initial_login);
             Button registerButton = (Button) findViewById(R.id.registerButton);
+            if(Build.VERSION.SDK_INT >= 23){
+                if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this, new String[]
+                            {Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+                }
+            }
             registerButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,17 +81,34 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onAvatarButonClicked() {
-
+    public void onAvatarButtonClicked() {
+        Log.i(TAG, "onAvatarButtonClicked");
+        //TODO implement onAvatarButonClicked
     }
 
     @Override
     public void onQuestButtonClicked() {
-
+        Log.i(TAG, "onQuestButtonClicked");
+        //TODO implement onQuestButonClicked
     }
 
     @Override
-    public void onStartButonClicked() {
+    public void onStartButtonClicked() {
+        Log.i(TAG, "onStartButtonClicked");
+        BottomPanelStartRunFragment fragment = new BottomPanelStartRunFragment();
+        String tag = BottomPanelStartRunFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottomPanel, fragment, tag).commit();
 
+        //TODO Send intent to mapfragment to start tracking
+    }
+
+    @Override
+    public void onEndButtonClicked() {
+        Log.i(TAG, "onEndButtonClicked");
+        BottomPanelFragment fragment = new BottomPanelFragment();
+        String tag = BottomPanelFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottomPanel, fragment, tag).commit();
+
+        // TODO process exp from run
     }
 }

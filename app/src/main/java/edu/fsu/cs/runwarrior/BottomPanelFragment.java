@@ -2,6 +2,7 @@ package edu.fsu.cs.runwarrior;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import androidx.fragment.app.Fragment;
 
 public class BottomPanelFragment extends Fragment {
 
+    private final String TAG = BottomPanelFragment.class.getCanonicalName();
+    
     private BottomPanelFragmentListener mListener;
     private ImageButton avatarImageButton;
     private TextView lvlTextVIew;
@@ -24,9 +27,9 @@ public class BottomPanelFragment extends Fragment {
     private Button startButton;
 
     public interface BottomPanelFragmentListener{
-        void onStartButonClicked();
+        void onStartButtonClicked();
         void onQuestButtonClicked();
-        void onAvatarButonClicked();
+        void onAvatarButtonClicked();
 
     }
 
@@ -39,7 +42,7 @@ public class BottomPanelFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.bottom_pannel, container, false);
+        View rootView = inflater.inflate(R.layout.bottom_panel, container, false);
 
         avatarImageButton = (ImageButton) rootView.findViewById(R.id.avatarImageButon);
         lvlTextVIew = (TextView) rootView.findViewById(R.id.levelTextView);
@@ -50,7 +53,8 @@ public class BottomPanelFragment extends Fragment {
         avatarImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onAvatarButonClicked();
+                Log.i(TAG, "onClick: onAvatarButtonClicked() called");
+                mListener.onAvatarButtonClicked();
             }
         });
 
@@ -58,6 +62,7 @@ public class BottomPanelFragment extends Fragment {
         questButon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(TAG, "onClick: onQuestButtonClicked() called");
                 mListener.onQuestButtonClicked();
             }
         });
@@ -65,7 +70,8 @@ public class BottomPanelFragment extends Fragment {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onStartButonClicked();
+                Log.i(TAG, "onClick: onStartButtonClicked() called");
+                mListener.onStartButtonClicked();
             }
         });
 

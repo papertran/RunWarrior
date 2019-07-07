@@ -48,13 +48,6 @@ public class DialogFragmentActivity extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if(Build.VERSION.SDK_INT >= 23){
-                            if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
-                                    PackageManager.PERMISSION_GRANTED){
-                                ActivityCompat.requestPermissions(getActivity(), new String[]
-                                        {Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-                            }
-                        }
 
                         String name = nameEditText.getText().toString();
                         float weight = Float.parseFloat(weightEditText.getText().toString());
