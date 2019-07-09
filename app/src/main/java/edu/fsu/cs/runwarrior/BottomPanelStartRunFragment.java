@@ -17,10 +17,13 @@ public class BottomPanelStartRunFragment extends Fragment {
 
     private final String TAG = BottomPanelStartRunFragment.class.getCanonicalName();
     private BottomPanelFragmentStartRunListener mListener;
-    TextView distanceTextVIew;
-    TextView timeTextView;
-    TextView expTextView;
-    Button endButton;
+    private TextView distanceTextVIew;
+    private TextView timeTextView;
+    private TextView expTextView;
+    private Button endButton;
+
+
+    // Values
 
     public interface BottomPanelFragmentStartRunListener{
         void onEndButtonClicked();

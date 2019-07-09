@@ -19,7 +19,8 @@ import android.widget.Button;
 
 public class MapsActivity extends FragmentActivity implements
         BottomPanelFragment.BottomPanelFragmentListener,
-        BottomPanelStartRunFragment.BottomPanelFragmentStartRunListener {
+        BottomPanelStartRunFragment.BottomPanelFragmentStartRunListener,
+        MapFragment.MapFragmentListener {
     // https://www.youtube.com/watch?v=i22INe14JUc&t=16s
     // How to implement / use interfaces for fragment communication
 
@@ -34,6 +35,10 @@ public class MapsActivity extends FragmentActivity implements
     public static final String USER_WEIGHT = "USER_WEIGHT";
     // Int
     public static final String USER_SEX = "USER_SEX";
+
+    public static final String TRACKING_KEY ="TRACKING_KEY";
+    public static final String DISTANCE_KEY = "DISTANCE_KEY";
+    public static final String TIME_KEY = "TIME_KEY";
 
     private final String TAG = MapsActivity.class.getCanonicalName();
 
@@ -99,7 +104,15 @@ public class MapsActivity extends FragmentActivity implements
         String tag = BottomPanelStartRunFragment.class.getCanonicalName();
         getSupportFragmentManager().beginTransaction().replace(R.id.bottomPanel, fragment, tag).commit();
 
-        //TODO Send intent to mapfragment to start tracking
+        // Sending bundle to Mapfragment that will tell it to start tracking the user
+        Bundle extras = new Bundle();
+        extras.putBoolean(TRACKING_KEY, true);
+
+        MapFragment mapFragment = new MapFragment();
+        mapFragment.setArguments(extras);
+        tag = MapFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction().replace(R.id.topPanel, mapFragment, tag).commit();
+
     }
 
     @Override
@@ -110,5 +123,20 @@ public class MapsActivity extends FragmentActivity implements
         getSupportFragmentManager().beginTransaction().replace(R.id.bottomPanel, fragment, tag).commit();
 
         // TODO process exp from run
+    }
+
+
+    @Override
+    public void sendDistance(double distance, int seconds) {
+        Log.i(TAG, "sendDistance: Distance sent = " + distance);
+        Bundle extras = new Bundle();
+        extras.putDouble(DISTANCE_KEY, distance);
+
+
+        BottomPanelStartRunFragment fragment = new BottomPanelStartRunFragment();
+        fragment.setArguments(extras);
+        String tag = BottomPanelStartRunFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottomPanel, fragment, tag).commit();
+
     }
 }
