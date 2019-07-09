@@ -5,10 +5,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,12 +47,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Boolean isCreated = settings.getBoolean(USER_CREATED, false);
         if(!isCreated){
             setContentView(R.layout.initial_login);
-            Button registerButton = (Button) findViewById(R.id.registerButton);
+            Button registerButton = (Button) findViewById(R.id.submitButton);
             registerButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DialogFragmentActivity fragment = new DialogFragmentActivity();
-                    fragment.show(getSupportFragmentManager(), "Dialog");
+                    if (createCharacter()){
+                        restartActivity();
+                    }
                 }
             });
         }
@@ -84,5 +88,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+    private boolean createCharacter() {
+        EditText nameEditText = findViewById(R.id.nameEditText);
+        EditText weightEditText = findViewById(R.id.weightEditText);
+
+        String name = nameEditText.getText().toString();
+        float weight = Float.parseFloat(weightEditText.getText().toString());
+
+        if (name.isEmpty()){
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        SharedPreferences settings = getSharedPreferences(MapsActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(MapsActivity.USER_NAME, name);
+        editor.putFloat(MapsActivity.USER_WEIGHT, weight);
+        editor.putBoolean(MapsActivity.USER_CREATED, true);
+        editor.apply();
+        return true;
+    }
+    private void restartActivity(){
+        Intent restartMain = new Intent(this, MapsActivity.class);
+        startActivity(restartMain);
     }
 }

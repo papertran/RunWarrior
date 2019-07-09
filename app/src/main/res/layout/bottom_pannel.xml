@@ -6,34 +6,39 @@
         android:id="@+id/avatarImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/avatarmale"/>
+        android:src="@drawable/avatarmale" />
 
     <TextView
         android:id="@+id/levelTextView"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/avatarImageView"
-        android:layout_toEndOf="@id/avatarImageView"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/avatarImageView"
+        android:layout_toRightOf="@id/avatarImageView"
         android:text="Level 1"
-        android:textSize="20sp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textSize="20sp" />
 
     <ProgressBar
         android:id="@+id/expProgressBar"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/avatarImageView"
-        android:layout_toEndOf="@id/avatarImageView"
         android:layout_below="@id/levelTextView"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:progress="0"
-        />
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="55dp"
+        android:layout_toEndOf="@id/avatarImageView"
+        android:layout_toRightOf="@id/avatarImageView"
+        android:progress="0" />
 
     <Button
         android:id="@+id/questButton"

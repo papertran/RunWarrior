@@ -4,17 +4,17 @@
 
 
     <EditText
-        android:id="@+id/nameEditText"
-        android:hint="Enter Your Name"
-        android:textSize="20sp"
+        android:id="@+id/nameEditText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:paddingLeft="20dp"
+        android:hint="Enter Your Name"
         android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:paddingEnd="20dp"
         android:paddingRight="20dp"
-        android:paddingEnd="20dp"/>
+        android:textSize="20sp" />
 
 
     <EditText
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/nameEditText"
+        android:layout_below="@id/nameEditText1"
         android:paddingLeft="20dp"
         android:paddingStart="20dp"
         android:paddingRight="20dp"
@@ -61,7 +61,7 @@
             android:id="@+id/avatarFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawable="@drawable/avatarfemale"
-            />
+            android:layout_alignEnd="@+id/avatarRadioGroup"
+            android:drawable="@drawable/avatarfemale" />
     </RadioGroup>
 </RelativeLayout>

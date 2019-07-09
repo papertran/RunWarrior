@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp" android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/edit_text_background"
+        android:ems="10"
+        android:padding="10dp"
+        android:fontFamily="monospace"
+        android:hint="Enter your username"
+        android:inputType="textPersonName"
+        android:textSize="20sp" />
+
+    <EditText
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"
+        android:id="@+id/weightEditText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/nameEditText"
+        android:ems="10"
+        android:fontFamily="monospace"
+        android:hint="Enter your current weight"
+        android:inputType="number"
+        android:textSize="20sp" />
 
     <Button
-        android:id="@+id/registerButton"
+        android:layout_centerInParent="true"
+        android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Greetings! Click this button to create your running avatar!"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-    />
+        android:textAllCaps="false"
+
+        android:padding="10dp"
+        android:background="@drawable/submit_button_background"
+        android:fontFamily="monospace"
+        android:text="Create avatar" />
+
 </RelativeLayout>
