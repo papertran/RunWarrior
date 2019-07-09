@@ -122,15 +122,17 @@ public class MapsActivity extends FragmentActivity implements
         String tag = BottomPanelFragment.class.getCanonicalName();
         getSupportFragmentManager().beginTransaction().replace(R.id.bottomPanel, fragment, tag).commit();
 
-        // TODO process exp from run
+        MapFragment mapFragment = new MapFragment();
+        tag = MapFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction().replace(R.id.topPanel, mapFragment, tag).commit();
     }
 
 
     @Override
     public void sendDistance(double distance, int seconds) {
-        Log.i(TAG, "sendDistance: Distance sent = " + distance);
         Bundle extras = new Bundle();
         extras.putDouble(DISTANCE_KEY, distance);
+        extras.putInt(TIME_KEY, seconds);
 
 
         BottomPanelStartRunFragment fragment = new BottomPanelStartRunFragment();

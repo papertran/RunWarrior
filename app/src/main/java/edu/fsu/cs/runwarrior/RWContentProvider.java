@@ -20,11 +20,11 @@ public class RWContentProvider extends ContentProvider {
     public final static String TABLE_NAMESTABLE = "userSesions";
 
     // Columns of the Database
-    public final static String RUN_SESSION = "RUN_SESSION";
-    public final static String DISTANCE_RAN = "DISTANCE_RAN";
-    public final static String TIME_ELAPSED = "TIME_ELAPSED";
-    public final static String EXP_EARNED = "EXP_EARNED";
-    public final static String DATE = "DATE";
+    public final static String RUN_SESSION = "RUN_SESSION";             // Number is int
+    public final static String DISTANCE_RAN = "DISTANCE_RAN";           // Will be in meters
+    public final static String TIME_ELAPSED = "TIME_ELAPSED";           // Will be time object
+    public final static String EXP_EARNED = "EXP_EARNED";               // Will be integer
+    public final static String DATE = "DATE";                           // Will be date object
 
 
 

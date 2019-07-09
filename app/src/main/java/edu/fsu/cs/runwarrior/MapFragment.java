@@ -23,6 +23,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MapFragment extends Fragment {
 
     private static final String TAG = MapFragment.class.getCanonicalName();
@@ -38,14 +41,15 @@ public class MapFragment extends Fragment {
     private LatLng currentLoc;
 
     // Location Updates Variables
-    private final long minTime = 1000;     // 1 Seconds
-    private final long minDistance = 10000;   // 10000 meters; 10000m is impossible in 1 sec
+    private final long minTime = 5000;     // 5 Seconds
+    private final long minDistance = 10;   // 10 meters;
 
+    Timer timer = new Timer();
 
     // Values to send to send to update the BottomPanelStartRunFragment
     private MapFragmentListener mListener;
     private double distance = 0;
-    private int seconds;
+    private int seconds = 0;
     public interface MapFragmentListener{
         void sendDistance(double distance, int seconds);
     }
@@ -108,7 +112,6 @@ public class MapFragment extends Fragment {
                         public void onLocationChanged(Location location) {
                             // Draws the line between old point and new point
                             LatLng newLoc =  new LatLng(location.getLatitude(), location.getLongitude());
-                            seconds += 1;
                             // https://www.youtube.com/watch?v=xl0GwkLNpNI
                             // Adding a route to the map
                             Polyline route = mGoogleMap.addPolyline(
@@ -127,7 +130,8 @@ public class MapFragment extends Fragment {
                             currentLoc = newLoc;
                             mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 18.0f));
 
-                            mListener.sendDistance(distance, seconds);
+
+
                         }
 
                         @Override
@@ -153,6 +157,20 @@ public class MapFragment extends Fragment {
                         Log.i(TAG, "onMapReady: failed to requestLocationUpdates()");
                         e.printStackTrace();
                     }
+
+                    timer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            seconds += 1;
+                            try {
+                                mListener.sendDistance(distance, seconds);
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, 0, 1000);
                 }
 
 
@@ -177,7 +195,13 @@ public class MapFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        try {
+            timer.cancel();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         mMapView.onDestroy();
+
     }
 
     @Override
