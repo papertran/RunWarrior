@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Run Warrior</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Run Warrior</string>
+
+    <string name="authority">edu.fsu.cs.runwarrior</string>
+    <string name="read_permission">edu.fsu.cs.runwarrior.READ_PERMISION</string>
+    <string name="write_permission">edu.fsu.cs.runwarrior.WRITE_PERMISION</string>
+
 </resources>

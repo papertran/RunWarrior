@@ -8,6 +8,8 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <permission android:name="@string/read_permission"/>
+    <permission android:name="@string/write_permission"/>
 
     <application
         android:allowBackup="true"
@@ -38,6 +40,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="@string/authority"
+            android:name="edu.fsu.cs.runwarrior.RWContentProvider"
+            android:exported="true"
+            android:readPermission="@string/read_permission"
+            android:writePermission="@string/write_permission"/>
 
     </application>
 
