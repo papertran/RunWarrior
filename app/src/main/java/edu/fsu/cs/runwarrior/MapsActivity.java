@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -120,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onEndButtonClicked() {
+    public void onEndButtonClicked(ContentValues values) {
         Log.i(TAG, "onEndButtonClicked");
         BottomPanelFragment fragment = new BottomPanelFragment();
         String tag = BottomPanelFragment.class.getCanonicalName();
@@ -129,6 +130,18 @@ public class MapsActivity extends FragmentActivity implements
         MapFragment mapFragment = new MapFragment();
         tag = MapFragment.class.getCanonicalName();
         getSupportFragmentManager().beginTransaction().replace(R.id.topPanel, mapFragment, tag).commit();
+
+
+        // Just example to see data passed into here
+        int exp = values.getAsInteger(RWContentProvider.EXP_EARNED);
+        float distance = values.getAsFloat(RWContentProvider.DISTANCE_RAN);
+        String timeElapsed = values.getAsString(RWContentProvider.TIME_ELAPSED);
+        String date = values.getAsString(RWContentProvider.DATE);
+        Log.i(TAG, "onEndButtonClicked: exp = " + exp);
+        Log.i(TAG, "onEndButtonClicked: distance = " + distance);
+        Log.i(TAG, "onEndButtonClicked: time = " + timeElapsed);
+        Log.i(TAG, "onEndButtonClicked: date = " + date);
+
     }
 
 

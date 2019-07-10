@@ -35,7 +35,7 @@ public class BottomPanelStartRunFragment extends Fragment {
     private java.sql.Time mTime;
 
     public interface BottomPanelFragmentStartRunListener{
-        void onEndButtonClicked();
+        void onEndButtonClicked(ContentValues values);
     }
 
 
@@ -104,7 +104,7 @@ public class BottomPanelStartRunFragment extends Fragment {
                 contentValues.put(RWContentProvider.DATE, sqlDate.toString());
                 getContext().getContentResolver().insert(RWContentProvider.CONTENT_URI, contentValues);
 
-                mListener.onEndButtonClicked();
+                mListener.onEndButtonClicked(contentValues);
 
                 // This checks if the content values were inserted correctly, they were
 //                mCursor = getContext().getContentResolver().query(RWContentProvider.CONTENT_URI,
