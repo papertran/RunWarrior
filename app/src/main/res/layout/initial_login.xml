@@ -39,7 +39,7 @@
         android:textAllCaps="false"
 
         android:padding="10dp"
-        android:background="@drawable/submit_button_background"
+        android:background="@drawable/button_background_gold"
         android:fontFamily="monospace"
         android:text="Create avatar" />
 

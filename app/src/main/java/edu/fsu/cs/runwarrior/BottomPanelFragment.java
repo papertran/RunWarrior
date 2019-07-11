@@ -23,7 +23,7 @@ public class BottomPanelFragment extends Fragment {
     private ImageButton avatarImageButton;
     private TextView lvlTextVIew;
     private ProgressBar expProgressBar;
-    private Button questButon;
+    private Button questButton;
     private Button startButton;
 
     public interface BottomPanelFragmentListener{
@@ -44,10 +44,10 @@ public class BottomPanelFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.bottom_panel, container, false);
 
-        avatarImageButton = (ImageButton) rootView.findViewById(R.id.avatarImageButon);
-        lvlTextVIew = (TextView) rootView.findViewById(R.id.levelTextView);
-        expProgressBar = (ProgressBar) rootView.findViewById(R.id.expProgressBar);
-        questButon = (Button) rootView.findViewById(R.id.questButton);
+        avatarImageButton = (ImageButton) rootView.findViewById(R.id.avatarImageButton);
+//        lvlTextVIew = (TextView) rootView.findViewById(R.id.levelTextViewOld);
+//        expProgressBar = (ProgressBar) rootView.findViewById(R.id.expProgressBarOld);
+        questButton = (Button) rootView.findViewById(R.id.questButton);
         startButton = (Button) rootView.findViewById(R.id.startButton);
 
         avatarImageButton.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ public class BottomPanelFragment extends Fragment {
         });
 
 
-        questButon.setOnClickListener(new View.OnClickListener() {
+        questButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick: onQuestButtonClicked() called");

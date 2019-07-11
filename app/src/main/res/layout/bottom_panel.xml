@@ -1,59 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
-    <ImageButton
-        android:id="@+id/avatarImageButon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/avatarmale"/>
-
-    <TextView
-        android:id="@+id/levelTextView"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/avatarImageButon"
-        android:layout_toEndOf="@id/avatarImageButon"
-        android:layout_marginTop="10dp"
-        android:text="Level 1"
-        android:textSize="20sp"
-        android:textAlignment="center"/>
-
-    <ProgressBar
-        android:id="@+id/expProgressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/avatarImageButon"
-        android:layout_toEndOf="@id/avatarImageButon"
-        android:layout_below="@id/levelTextView"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:progress="0"
-        />
-
-    <Button
-        android:id="@+id/questButton"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:text="Quests"
-        />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/BottomPanelConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="100dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/questButton"
-        android:text="Start Run!"
-        />
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background_gold"
+        android:fontFamily="monospace"
+        android:text="Start your run!"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/questButton"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:background="@drawable/button_background_garnet"
+        android:fontFamily="monospace"
+        android:text="Quests"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarImageButton"
+        app:layout_constraintEnd_toEndOf="@+id/startButton"
+        app:layout_constraintStart_toStartOf="@+id/startButton" />
+
+    <ImageButton
+        android:id="@+id/avatarImageButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars[0]" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
