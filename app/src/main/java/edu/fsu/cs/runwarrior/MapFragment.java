@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.SphericalUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -60,7 +61,7 @@ public class MapFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mLocationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         try{
-        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }catch(SecurityException e){
             e.printStackTrace();
         }
@@ -231,17 +232,21 @@ public class MapFragment extends Fragment {
     // https://stackoverflow.com/questions/8832071/how-can-i-get-the-distance-between-two-point-by-latlng
     public float distance (float lat_a, float lng_a, float lat_b, float lng_b )
     {
-        double earthRadius = 3958.75;
-        double latDiff = Math.toRadians(lat_b-lat_a);
-        double lngDiff = Math.toRadians(lng_b-lng_a);
-        double a = Math.sin(latDiff /2) * Math.sin(latDiff /2) +
-                Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) *
-                        Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        double distance = earthRadius * c;
+        LatLng startLatLng = new LatLng(lat_a, lng_a);
+        LatLng endLatLng = new LatLng(lat_b, lng_b);
+        double distance = SphericalUtil.computeDistanceBetween(startLatLng, endLatLng);
+        return (float) (distance /1000);
+//        double earthRadius = 3958.75;
+//        double latDiff = Math.toRadians(lat_b-lat_a);
+//        double lngDiff = Math.toRadians(lng_b-lng_a);
+//        double a = Math.sin(latDiff /2) * Math.sin(latDiff /2) +
+//                Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) *
+//                        Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
+//        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+//        double distance = earthRadius * c;
+//
+//        int meterConversion = 1609;
 
-        int meterConversion = 1609;
-
-        return new Float(distance * meterConversion).floatValue();
+//        return new Float(distance * meterConversion).floatValue();
     }
 }

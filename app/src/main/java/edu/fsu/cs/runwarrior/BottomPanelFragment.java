@@ -1,19 +1,30 @@
 package edu.fsu.cs.runwarrior;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class BottomPanelFragment extends Fragment {
 
@@ -38,15 +49,20 @@ public class BottomPanelFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.bottom_panel, container, false);
-
         avatarImageButton = (ImageButton) rootView.findViewById(R.id.avatarImageButton);
+        Uri imageUri = ((MapsActivity)getActivity()).getImageUri();
+        if (imageUri != null) {
+            setAvatarImage(imageUri);
+        }
 //        lvlTextVIew = (TextView) rootView.findViewById(R.id.levelTextViewOld);
 //        expProgressBar = (ProgressBar) rootView.findViewById(R.id.expProgressBarOld);
+
         questButton = (Button) rootView.findViewById(R.id.questButton);
         startButton = (Button) rootView.findViewById(R.id.startButton);
 
@@ -54,10 +70,25 @@ public class BottomPanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick: onAvatarButtonClicked() called");
-                mListener.onAvatarButtonClicked();
             }
         });
-
+        avatarImageButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_UP:
+                        v.setAlpha(1);
+                        return true;
+                    case MotionEvent.ACTION_DOWN:
+                        v.setAlpha((float) .5);
+                        mListener.onAvatarButtonClicked();
+                        return true;
+                    case MotionEvent.ACTION_CANCEL:
+                        return false;
+                }
+                return false;
+            }
+        });
 
         questButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,5 +123,21 @@ public class BottomPanelFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    //https://stackoverflow.com/questions/9107900/how-to-upload-image-from-gallery-in-android
+    public void setAvatarImage(Uri imageuri) {
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageuri);
+            Bitmap bMapScaled = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            avatarImageButton.setImageBitmap(bMapScaled);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
