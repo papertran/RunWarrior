@@ -47,7 +47,7 @@ public class UserProfile extends Fragment {
         return root;
     }
 
-    private void setWidget(Fragment f, String tag) {
+    private <T extends Fragment> void setWidget(T f, String tag) {
         FragmentManager manager = getChildFragmentManager();
         FragmentTransaction trans = manager.beginTransaction();
         trans.replace(R.id.row_widget, f, tag).addToBackStack(null);
