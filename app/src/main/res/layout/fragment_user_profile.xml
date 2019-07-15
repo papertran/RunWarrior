@@ -71,8 +71,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:textSize="30sp"
-            android:id="@+id/userProfile_totalMilesRan"
-            android:text="17301 mi"/>
+            android:id="@+id/userProfile_totalDistanceRan"
+            android:text="17301 m"/>
     </LinearLayout>
 
     <FrameLayout

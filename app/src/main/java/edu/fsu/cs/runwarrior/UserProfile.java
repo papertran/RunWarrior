@@ -2,6 +2,7 @@ package edu.fsu.cs.runwarrior;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class UserProfile extends Fragment {
     public UserProfile() {}
@@ -38,13 +41,27 @@ public class UserProfile extends Fragment {
         String userName = settings.getString(MapsActivity.USER_NAME, "Name not set");
         float userWeight = settings.getFloat(MapsActivity.USER_WEIGHT, 0);
         String userAvatar = settings.getString(MapsActivity.AVATAR_IMAGE, null);
+        float userDistanceRan = 0;
+
+        // Collect all past runs into list
+        Cursor c = getActivity()
+          .getApplicationContext()
+          .getContentResolver()
+          .query(RWContentProvider.CONTENT_URI, null, null, null, null);
+        c.moveToFirst();
+        if (c.getCount() > 0) {
+            for (int i = 0; i < c.getCount(); ++i, c.moveToNext()) {
+                userDistanceRan += Float.valueOf(c.getString(2));
+            }
+        }
+        c.close();
 
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
         ((TextView)root.findViewById(R.id.userProfile_name)).setText(userName);
-        ((TextView)root.findViewById(R.id.userProfile_weight)).setText(String.valueOf(userWeight));
-        ((TextView)root.findViewById(R.id.userProfile_totalMilesRan)).setText("0");
+        ((TextView)root.findViewById(R.id.userProfile_weight)).setText(String.valueOf(userWeight) + " lbs");
+        ((TextView)root.findViewById(R.id.userProfile_totalDistanceRan)).setText(String.valueOf(userDistanceRan) + " m");
         ((ImageButton)root.findViewById(R.id.userProfile_avatar)).setImageURI(Uri.parse(userAvatar));
 
         showRuns();
