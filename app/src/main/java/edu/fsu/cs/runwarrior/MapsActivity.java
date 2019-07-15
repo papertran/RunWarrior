@@ -3,8 +3,6 @@ package edu.fsu.cs.runwarrior;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
@@ -136,31 +134,32 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-    private void loadFragmentPair(Fragment top, String topTag, Fragment bottom, String bottomTag) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction trans = manager.beginTransaction();
-
+    // set the top and bottom panels to specified fragment arguments, allow any instances of fragments from Fragment-extended classes as args
+    private <T extends Fragment, U extends Fragment> void loadFragmentPair(T top, String topTag, U bottom, String bottomTag) {
         // set top panel and allow back button
-        trans.replace(R.id.topPanel, top, topTag).addToBackStack(null);
+        getSupportFragmentManager()
+          .beginTransaction()
+          // set top panel to `top` argument
+          .replace(R.id.topPanel, top, topTag)
+          .addToBackStack(null) // support back button
+          // set bottom panel to `bottom` argument
+          .replace(R.id.bottomPanel, bottom, bottomTag)
+          .addToBackStack(null)// support back button
+          .commit();
+    }
 
-        // set bottom panel and allow back button
-        trans.replace(R.id.bottomPanel, bottom, bottomTag).addToBackStack(null);
-
-        // done
-        trans.commit();
+    private UserProfile getUserProfileFragment() {
+       return (UserProfile) getSupportFragmentManager().findFragmentById(R.id.topPanel);
     }
 
     @Override
     public void onUserProfilePanelRuns() {
-        UserProfile userProfileFragment = (UserProfile) getSupportFragmentManager().findFragmentById(R.id.topPanel);
-        userProfileFragment.showRuns();
-
+        getUserProfileFragment().showRuns();
     }
 
     @Override
     public void onUserProfilePanelGraph() {
-        UserProfile userProfileFragment = (UserProfile) getSupportFragmentManager().findFragmentById(R.id.topPanel);
-        userProfileFragment.showGraph();
+        getUserProfileFragment().showGraph();
     }
 
     @Override

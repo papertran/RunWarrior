@@ -20,11 +20,6 @@ public class PastRunsFragment extends Fragment {
     public PastRunsFragment() { }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_past_runs, container, false);
@@ -34,7 +29,14 @@ public class PastRunsFragment extends Fragment {
         Cursor c = getActivity()
           .getApplicationContext()
           .getContentResolver()
-          .query(RWContentProvider.CONTENT_URI, null, null, null, null);
+          .query(
+            RWContentProvider.CONTENT_URI,
+            null,
+            null,
+            null,
+            null); // SELECT * FROM Table;
+
+        // Add each row from db into array as formatted string containing data about each run
         c.moveToFirst();
         if (c.getCount() > 0) {
             for (int i = 0; i < c.getCount(); ++i, c.moveToNext()) {
@@ -43,10 +45,10 @@ public class PastRunsFragment extends Fragment {
         }
         c.close();
 
-        // reverse array, newest first
+        // reverse array, newest runs first
         Collections.reverse(pastRunsData);
 
-        // Set adapter to listview
+        // set the adapter
         ArrayAdapter<String> pastRunsViewAdapter = new ArrayAdapter<String>(
           getActivity(),
           android.R.layout.simple_list_item_1,
@@ -58,13 +60,11 @@ public class PastRunsFragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void onAttach(Context context) {
+    @Override public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    @Override public void onAttach(Context context) {
         super.onAttach(context);
     }
-
-    @Override
-    public void onDetach() {
+    @Override public void onDetach() {
         super.onDetach();
     }
 }

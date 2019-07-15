@@ -11,21 +11,19 @@ import android.view.ViewGroup;
 
 
 public class UserProfileBottomPanel extends Fragment {
-    private OnUserProfilePanelAction mListener;
-
     public UserProfileBottomPanel() { }
 
-    public static UserProfileBottomPanel newInstance() {
-        UserProfileBottomPanel fragment = new UserProfileBottomPanel();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    private OnUserProfilePanelAction mListener;
+    public interface OnUserProfilePanelAction {
+        void onUserProfilePanelClose();
+        void onUserProfilePanelRuns();
+        void onUserProfilePanelGraph();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    // the three main user-available functions available on this bottom panel
+    private void onClickGraph() { if (mListener != null) mListener.onUserProfilePanelGraph(); }
+    private void onClickRuns()  { if (mListener != null) mListener.onUserProfilePanelRuns(); }
+    private void onClickClose() { if (mListener != null) mListener.onUserProfilePanelClose(); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,45 +55,16 @@ public class UserProfileBottomPanel extends Fragment {
         return root;
     }
 
-    private void onClickGraph() {
-        if (mListener != null) {
-            mListener.onUserProfilePanelGraph();
-        }
-    }
-
-    private void onClickRuns() {
-        if (mListener != null) {
-            mListener.onUserProfilePanelRuns();
-        }
-    }
-
-    private void onClickClose() {
-        if (mListener != null) {
-            mListener.onUserProfilePanelClose();
-        }
-    }
-
+    @Override public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    @Override public void onDetach() { super.onDetach(); mListener = null; }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnUserProfilePanelAction) {
             mListener = (OnUserProfilePanelAction) context;
-        }
-        else {
+        } else {
             throw new RuntimeException(context.toString()
               + " must implement OnUserProfilePanelClose");
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnUserProfilePanelAction {
-        void onUserProfilePanelClose();
-        void onUserProfilePanelRuns();
-        void onUserProfilePanelGraph();
     }
 }
