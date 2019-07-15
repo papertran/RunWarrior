@@ -104,7 +104,7 @@ public class QuestFragment extends Fragment {
         update(initalexp);
         String quest1 = Double.toString(miles);
         String quest2 = Double.toString(time);
-        String[] quest = {"Run a total of " + quest1 + " meters", "Run for " + quest2 + " minutes"};
+        String[] quest = {"Run a total of " + quest1 + " km", "Run for " + quest2 + " minutes"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, quest); //creates adaptor
         Quest.setAdapter(adapter); //prints listview
       //  TextView updatelvl = (TextView) getActivity().findViewById(R.id.levelTextViewOld);

@@ -4,6 +4,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -320,6 +321,11 @@ public class MapsActivity extends FragmentActivity implements
     private void restartActivity() {
         Intent restartMain = new Intent(this, MapsActivity.class);
         startActivity(restartMain);
+    }
+
+    @Override
+    public void onBackPressed() {
+        restartActivity();
     }
 
     @Override
