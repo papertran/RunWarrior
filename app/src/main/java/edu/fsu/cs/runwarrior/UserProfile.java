@@ -1,6 +1,8 @@
 package edu.fsu.cs.runwarrior;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,14 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class UserProfile extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-
-//    private OnFragmentInteractionListener mListener;
-
     public UserProfile() {}
 
     public static UserProfile newInstance() {
@@ -31,18 +29,25 @@ public class UserProfile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SharedPreferences settings = getActivity().getSharedPreferences(MapsActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        String userName = settings.getString(MapsActivity.USER_NAME, "Name not set");
+        float userWeight = settings.getFloat(MapsActivity.USER_WEIGHT, 0);
+        String userAvatar = settings.getString(MapsActivity.AVATAR_IMAGE, null);
+
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_user_profile, container, false);
+
+        ((TextView)root.findViewById(R.id.userProfile_name)).setText(userName);
+        ((TextView)root.findViewById(R.id.userProfile_weight)).setText(String.valueOf(userWeight));
+        ((TextView)root.findViewById(R.id.userProfile_totalMilesRan)).setText("0");
+        ((ImageButton)root.findViewById(R.id.userProfile_avatar)).setImageURI(Uri.parse(userAvatar));
+
+        showRuns();
 
         return root;
     }
@@ -50,25 +55,13 @@ public class UserProfile extends Fragment {
     private <T extends Fragment> void setWidget(T f, String tag) {
         FragmentManager manager = getChildFragmentManager();
         FragmentTransaction trans = manager.beginTransaction();
-        trans.replace(R.id.row_widget, f, tag).addToBackStack(null);
+        trans.replace(R.id.userProfile_row_widget, f, tag).addToBackStack(null);
         trans.commit();
     }
-
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//              + " must implement OnUserProfilePanelClose");
-//        }
     }
 
     @Override
@@ -84,6 +77,6 @@ public class UserProfile extends Fragment {
 
     void showRuns() {
         Log.i("switch to runs", "meme");
-        //setWidget(new GraphFragment(), "Graph");
+        setWidget(new PastRunsFragment(), "Graph");
     }
 }

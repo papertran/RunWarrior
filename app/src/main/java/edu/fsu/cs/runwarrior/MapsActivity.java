@@ -55,8 +55,9 @@ public class MapsActivity extends FragmentActivity implements
     public static final String TRACKING_KEY = "TRACKING_KEY";
     public static final String DISTANCE_KEY = "DISTANCE_KEY";
     public static final String TIME_KEY = "TIME_KEY";
+    public static final String AVATAR_IMAGE = "AVATAR_IMAGE";
+
     private static final int GET_FROM_GALLERY = 3;
-    private static final String AVATAR_IMAGE = "AVATAR_IMAGE";
 
     private final String TAG = MapsActivity.class.getCanonicalName();
     private Uri imageUri;
