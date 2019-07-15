@@ -9,8 +9,8 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COURSE_LOCATION" />
-    <permission android:name="@string/read_permission"/>
-    <permission android:name="@string/write_permission"/>
+    <permission android:name="edu.fsu.cs.runwarrior.READ_PERMISION"/>
+    <permission android:name="edu.fsu.cs.runwarrior.WRITE_PERMISION"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application

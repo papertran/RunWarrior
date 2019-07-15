@@ -1,5 +1,6 @@
 package edu.fsu.cs.runwarrior;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -72,6 +73,7 @@ public class MapFragment extends Fragment {
         }
     }
 
+    @SuppressLint("MissingPermission")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -99,11 +101,13 @@ public class MapFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                currentLoc = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(currentLoc).build();
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 18.0f));
-
+                try {
+                    currentLoc = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(currentLoc).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 18.0f));
+                } catch (NullPointerException e){
+                    e.printStackTrace();
+                }
                 if(startTracking){
                     // https://www.youtube.com/watch?v=rN7x3ovWepM
                     // Used this to learn how track location

@@ -102,9 +102,17 @@ public class MapsActivity extends FragmentActivity implements
                 @Override
                 public void onClick(View v) {
 
-                    startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT,
-                                    android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI),
-                            GET_FROM_GALLERY);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT,
+                                        MediaStore.Images.Media.INTERNAL_CONTENT_URI),
+                                GET_FROM_GALLERY);
+                    } else {
+
+                        startActivityForResult(new Intent(Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.INTERNAL_CONTENT_URI),
+                                GET_FROM_GALLERY);
+                    }
 
                 }
             });
@@ -217,7 +225,11 @@ public class MapsActivity extends FragmentActivity implements
         editor.putString(MapsActivity.USER_NAME, name);
         editor.putFloat(MapsActivity.USER_WEIGHT, weight);
         editor.putBoolean(MapsActivity.USER_CREATED, true);
+        if (imageUri == null) {
+            imageUri = Uri.parse("");
+        }
         editor.putString(AVATAR_IMAGE, imageUri.toString());
+
         editor.apply();
         return true;
     }
@@ -235,6 +247,9 @@ public class MapsActivity extends FragmentActivity implements
         //Detects request codes
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             imageUri = data.getData();
+            if (imageUri == null){
+                imageUri = Uri.parse("");
+            }
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);

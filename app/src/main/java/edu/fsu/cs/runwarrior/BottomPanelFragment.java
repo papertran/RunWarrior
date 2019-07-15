@@ -57,9 +57,7 @@ public class BottomPanelFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.bottom_panel, container, false);
         avatarImageButton = (ImageButton) rootView.findViewById(R.id.avatarImageButton);
         Uri imageUri = ((MapsActivity)getActivity()).getImageUri();
-        if (imageUri != null) {
-            setAvatarImage(imageUri);
-        }
+        setAvatarImage(imageUri);
 //        lvlTextVIew = (TextView) rootView.findViewById(R.id.levelTextViewOld);
 //        expProgressBar = (ProgressBar) rootView.findViewById(R.id.expProgressBarOld);
 
@@ -128,6 +126,11 @@ public class BottomPanelFragment extends Fragment {
     //https://stackoverflow.com/questions/9107900/how-to-upload-image-from-gallery-in-android
     public void setAvatarImage(Uri imageuri) {
         Bitmap bitmap = null;
+        if (imageuri.toString().equals("")){
+//            bitmap = Bitmap.
+            avatarImageButton.setImageDrawable(getResources().getDrawable(R.drawable.avatarmale));
+            return;
+        }
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageuri);
             Bitmap bMapScaled = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
