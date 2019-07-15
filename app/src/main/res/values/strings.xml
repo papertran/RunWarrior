@@ -37,7 +37,7 @@
     </string-array>
 
     <!-- The previous two arrays taken word for word from https://www.hss.edu/conditions_burning-calories-with-exercise-calculating-estimated-energy-expenditure.asp?fbclid=IwAR3eY2ru-ypCfpPLzGQgSq951CHVEOVz97cbc0MoHWxcHEnZTRAiaYSEaaU -->
-        <!-- Used to calculate the amount of calories burned given the users weight, time of the runs, a multiplier derived from their average rate, and multiplying all of that by .0175 -->
+    <!-- Used to calculate the amount of calories burned given the users weight, time of the runs, a multiplier derived from their average rate, and multiplying all of that by .0175 -->
 
 
     <!-- TODO: Remove or change this placeholder text -->

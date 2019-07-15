@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -38,7 +39,15 @@ public class MapsActivity extends FragmentActivity implements
     // https://www.youtube.com/watch?v=i22INe14JUc&t=16s
     // How to implement / use interfaces for fragment communication
 
-
+    TextView getText;//To modify TextView once in the fragment
+    String getText2;
+    boolean counter2=false; //quest
+    boolean counter3=false; //how to store what level a player is. Start run
+    boolean counter=false; //for button
+    boolean counter4=false; //if
+    String hh ,mm,ss; //https://stackoverflow.com/questions/34331637/how-to-convert-hhmmss-into-int
+    Float Distance;
+    int xp;
     // Shared Preferences Keys
     public static final String PREFS_NAME = "RunWarriorUserSettings";
     // Boolean
@@ -187,7 +196,43 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onQuestButtonClicked() {
-        Log.i(TAG, "onQuestButtonClicked");
+        if(counter==false) { //Quest fragment opens for the first click
+            counter=true;
+            if(counter3==false){
+                getText2="1";
+                QuestFragment fragment = new QuestFragment();
+                String tag = QuestFragment.class.getCanonicalName();
+                getSupportFragmentManager().beginTransaction().replace(R.id.topPanel, fragment, tag).commit(); //stores and implementing a fragment
+            }
+            else {
+                counter2 = true;
+                getText= findViewById(R.id.levelTextViewOld);//To modify TextView once in the fragment
+                getText2=getText.getText().toString();
+                getText2=getText2.replaceAll("\\D+","");
+                Bundle bundle=new Bundle();
+                String tag = QuestFragment.class.getCanonicalName();
+                QuestFragment fragment = new QuestFragment();
+                bundle.putInt("xp", xp);
+                bundle.putString("mm",mm);
+                bundle.putString("lvl",getText2);
+                bundle.putFloat("distance",Distance);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.topPanel, fragment, tag).commit(); //stores and implementing a fragment
+                //https://stackoverflow.com/questions/4030928/extract-digits-from-a-string-in-java
+            }
+
+
+
+
+        }
+        else //map fragment opens
+        {
+            MapFragment fragment = new MapFragment();
+            String tag = QuestFragment.class.getCanonicalName(); //opens the mapfragment
+            getSupportFragmentManager().beginTransaction().replace(R.id.topPanel, fragment, tag).commit();
+            counter=false; //opens Quest button the next time it is click
+        }
+
         //TODO implement onQuestButonClicked
     }
 
