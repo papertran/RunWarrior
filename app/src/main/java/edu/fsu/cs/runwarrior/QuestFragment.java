@@ -36,10 +36,10 @@ public class QuestFragment extends Fragment {
     }
 
     int level, time, requiredLvlExp;
-    float km;
+    float m;
     int initalexp,initaltime;
     double initialmiles,InMiles;  //gets initial experience
-    String lvlString="0";
+    String lvlString;
     String minute;
     String kilometer;
     @Override
@@ -50,14 +50,14 @@ public class QuestFragment extends Fragment {
         SharedPreferences pref = getActivity().getSharedPreferences(MapsActivity.PREFS_NAME, Context.MODE_PRIVATE);
         time=pref.getInt("Time",-1);
         requiredLvlExp=pref.getInt("Requiredxp",-1);
-        km=pref.getFloat("Miles",-1);
-        lvlString=pref.getString("level","-1");
-        Toast.makeText(getActivity(), time+ " "+requiredLvlExp,Toast.LENGTH_LONG).show();
+        m=pref.getFloat("Miles",-1);
+        //lvlString=pref.getString("level","-1");
+       // Toast.makeText(getActivity(), time+ " "+requiredLvlExp,Toast.LENGTH_LONG).show();
 
 
-        if (time==-1||requiredLvlExp==-1||km==-1&&lvlString=="-1") {
+        if (time==-1||requiredLvlExp==-1||m==-1) {
             time = 10;
-            km = 1000;
+            m = 1000;
             requiredLvlExp = 200;
             lvlString="0";
         }
@@ -65,11 +65,11 @@ public class QuestFragment extends Fragment {
         if(bundle!=null)
         {
             minute=bundle.getString("mm","null");
-           // lvlString = bundle.getString("lvl", "-1");
+            lvlString = bundle.getString("lvl", "-1");
             initaltime=Integer.parseInt(minute);
             initalexp=bundle.getInt("xp",-1);
             initialmiles=bundle.getFloat("distance",-1);
-            //  Toast.makeText(getActivity(),"0",Toast.LENGTH_LONG).show();
+            // Toast.makeText(getActivity(),"0",Toast.LENGTH_LONG).show();
         }
         else
         {
@@ -80,15 +80,19 @@ public class QuestFragment extends Fragment {
          //   miles = 1000;
          //   requiredLvlExp = 200;
            // initalexp=0;
-            //Toast.makeText(getActivity(),"1",Toast.LENGTH_LONG).show();
+           // Toast.makeText(getActivity(),"1",Toast.LENGTH_LONG).show();
         }
-        // InMiles=initialmiles/1609.34f;
+        //Toast.makeText(getActivity(),requiredLvlExp,Toast.LENGTH_LONG).show();
+        Log.i("miles", "onCreateView: " + initialmiles);
+        Log.i("Miles", "onCreateView: " + m);
+
         Quest = (ListView) v.findViewById(R.id.selection_list);
-        if (initialmiles >= km) {
+        if (initialmiles >= m) {
             do {
                 initalexp += 100;
-                km += 1000;
-            }while((initialmiles>=km));
+                m += 1000;
+                Log.i("testing", "onCreateView: " + initalexp);
+            }while((initialmiles>=m));
             //update GetExperience
         }
         if (initaltime >= time) {
@@ -100,14 +104,16 @@ public class QuestFragment extends Fragment {
         }
         if (initalexp >= requiredLvlExp) //comparing experience with required lvlexp;
         {
+           // Toast.makeText(getActivity(),"Level Up",Toast.LENGTH_LONG);
             do {
                 lvlString = levelup(Integer.parseInt(lvlString));
                 requiredLvlExp = lvlExp(requiredLvlExp);
+                Log.i("level","yay"+lvlString);
             }while ((initalexp>=requiredLvlExp));
-            Toast.makeText(getActivity(),"Level Up",Toast.LENGTH_LONG);
+
         }
         update(initalexp);
-        String quest1 = Double.toString(km/1000);
+        String quest1 = Double.toString(m/1000);
         String quest2 = Double.toString(time);
         String[] quest = {"Run a total of " + quest1 + " Kilometer", "Run for " + quest2 + " minutes"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, quest); //creates adaptor
@@ -119,8 +125,8 @@ public class QuestFragment extends Fragment {
         Log.i("QUESTFRAGMENT", "onCreateView: " + lvlString);
         editor.putInt("Requiredxp", requiredLvlExp);
         editor.putInt("Time", time);
-        editor.putFloat("Miles", km);
-        editor.putString("level",lvlString);
+        editor.putFloat("Miles", m);
+        editor.putString("level1",lvlString);
         //Toast.makeText(getActivity(),requiredLvlExp,Toast.LENGTH_LONG).show();
         editor.apply(); //store the sharepreference
 
