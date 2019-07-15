@@ -30,6 +30,7 @@ public class BottomPanelStartRunFragment extends Fragment {
 
     // Values
     private double distance = 0;
+    private double kmDistance = 0;
     private int exp = 0;
     private int timeSeconds = 0;
     private java.sql.Time mTime;
@@ -45,6 +46,7 @@ public class BottomPanelStartRunFragment extends Fragment {
         Bundle extras = getArguments();
         if(extras != null){
             distance = extras.getDouble(MapsActivity.DISTANCE_KEY, 0);
+            kmDistance = distance / 1000;
             timeSeconds = extras.getInt(MapsActivity.TIME_KEY, 0);
             exp = (int)(distance / 10);
 
@@ -68,7 +70,7 @@ public class BottomPanelStartRunFragment extends Fragment {
         endButton = (Button) rootView.findViewById(R.id.endButton);
 
         if(distance != 0 || mTime != null) {
-            distanceTextVIew.setText(String.format("%.2f", distance) + "m");
+            distanceTextVIew.setText(String.format("%.2f", kmDistance) + "km");
             timeTextView.setText(mTime.toString());
             expTextView.setText("" + exp);
         }
