@@ -222,13 +222,12 @@ public class MapsActivity extends FragmentActivity implements
         float distance = values.getAsFloat(RWContentProvider.DISTANCE_RAN);
         String timeElapsed = values.getAsString(RWContentProvider.TIME_ELAPSED);
         String date = values.getAsString(RWContentProvider.DATE);
+
         Log.i(TAG, "onEndButtonClicked: exp = " + exp);
         Log.i(TAG, "onEndButtonClicked: distance = " + distance);
         Log.i(TAG, "onEndButtonClicked: time = " + timeElapsed);
         Log.i(TAG, "onEndButtonClicked: date = " + date);
-
     }
-
 
     @Override
     public void sendDistance(double distance, int seconds) {

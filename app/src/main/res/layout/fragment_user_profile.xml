@@ -14,6 +14,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:gravity="center_vertical"
+        android:layout_marginLeft="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginEnd="10sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageButton
@@ -35,6 +39,10 @@
         android:id="@+id/userProfile_row_weight"
         android:layout_below="@id/userProfile_row_avatar"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginEnd="10sp"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -58,6 +66,10 @@
         android:layout_below="@id/userProfile_row_weight"
         android:layout_marginTop="20dp"
         android:gravity="center_vertical"
+        android:layout_marginLeft="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginEnd="10sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
