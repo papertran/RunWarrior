@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ListViewConstraintLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".PastRunsFragment"
-    android:orientation="vertical">
-
-<LinearLayout
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
 
     <TextView
@@ -18,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Date"
+        android:text="date"
         android:textSize="16sp"
         app:fontFamily="monospace" />
 
@@ -27,7 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Distance"
+        android:text="meters"
         android:textSize="16sp"
         app:fontFamily="monospace" />
 
@@ -36,20 +30,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Time"
+        android:text="time"
         android:textSize="16sp"
         app:fontFamily="monospace" />
-
-</LinearLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@+id/userProfile_pastRuns_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
-
 
 </LinearLayout>

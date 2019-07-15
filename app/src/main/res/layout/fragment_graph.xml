@@ -84,7 +84,12 @@
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sub" />
+            android:fontFamily="monospace"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background_garnet"
+            android:text="@string/sub"
+            android:textColor="@android:color/white" />
 
         <com.jjoe64.graphview.GraphView
             android:id="@+id/graph2"

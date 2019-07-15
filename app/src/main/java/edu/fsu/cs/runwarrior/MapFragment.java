@@ -156,8 +156,8 @@ public class MapFragment extends Fragment {
                     };
 
                     try{
-                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,
-                            minDistance, mLocationListener);}
+                        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,
+                                minDistance, mLocationListener);}
                     catch (SecurityException e){
                         Log.i(TAG, "onMapReady: failed to requestLocationUpdates()");
                         e.printStackTrace();

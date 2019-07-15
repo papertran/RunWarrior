@@ -25,7 +25,7 @@ public class PastRunsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_past_runs, container, false);
 
         // Collect all past runs into list
-        ArrayList<String> pastRunsData = new ArrayList<>();
+        ArrayList<String[]> pastRunsData = new ArrayList<>();
         Cursor c = getActivity()
           .getApplicationContext()
           .getContentResolver()
@@ -40,7 +40,12 @@ public class PastRunsFragment extends Fragment {
         c.moveToFirst();
         if (c.getCount() > 0) {
             for (int i = 0; i < c.getCount(); ++i, c.moveToNext()) {
-                pastRunsData.add("Run #" + c.getString(1) + " - Ran " + c.getString(2) + " meters in " + c.getString(3) + " on " + c.getString(5));
+//                pastRunsData.add("Run #" + c.getString(1) + " - Ran " + c.getString(2) + " meters in " + c.getString(3) + " on " + c.getString(5));
+                String date = c.getString(5);
+                String dist = c.getString(2);
+                dist = String.format("%.2f", Float.parseFloat(dist));
+                String time = c.getString(3);
+                pastRunsData.add(new String[] {date, dist, time});
             }
         }
         c.close();
@@ -49,11 +54,7 @@ public class PastRunsFragment extends Fragment {
         Collections.reverse(pastRunsData);
 
         // set the adapter
-        ArrayAdapter<String> pastRunsViewAdapter = new ArrayAdapter<String>(
-          getActivity(),
-          android.R.layout.simple_list_item_1,
-          pastRunsData.toArray(new String[0])
-        );
+        CustomListAdapter pastRunsViewAdapter = new CustomListAdapter( getContext(), pastRunsData);
         ListView pastRunsView = root.findViewById(R.id.userProfile_pastRuns_list);
         pastRunsView.setAdapter(pastRunsViewAdapter);
 

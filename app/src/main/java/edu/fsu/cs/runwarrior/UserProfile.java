@@ -3,16 +3,20 @@ package edu.fsu.cs.runwarrior;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 public class UserProfile extends Fragment {
     public UserProfile() {}
@@ -58,8 +62,16 @@ public class UserProfile extends Fragment {
         // set TextViews' contents with user-specific details
         ((TextView)root.findViewById(R.id.userProfile_name)).setText(userName);
         ((TextView)root.findViewById(R.id.userProfile_weight)).setText(userWeight + " lbs");
-        ((TextView)root.findViewById(R.id.userProfile_totalDistanceRan)).setText(userDistanceRan + " m");
-        ((ImageButton)root.findViewById(R.id.userProfile_avatar)).setImageURI(Uri.parse(userAvatar));
+        ((TextView)root.findViewById(R.id.userProfile_totalDistanceRan)).setText(String.format("%.2f", userDistanceRan) + " m");
+
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.parse(userAvatar));
+            Bitmap bMapScaled = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            ((ImageButton)root.findViewById(R.id.userProfile_avatar)).setImageBitmap(bMapScaled);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // initialize first fragment, PastRunsFragment
         showRuns();
