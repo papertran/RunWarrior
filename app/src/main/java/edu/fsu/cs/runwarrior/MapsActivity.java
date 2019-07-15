@@ -200,31 +200,31 @@ public class MapsActivity extends FragmentActivity implements
         if(counter==false) { //Quest fragment opens for the first click
             counter=true;
             if(counter3==false){
-                getText2="1";
                 QuestFragment fragment = new QuestFragment();
                 String tag = QuestFragment.class.getCanonicalName();
                 getSupportFragmentManager().beginTransaction().replace(R.id.topPanel, fragment, tag).commit(); //stores and implementing a fragment
             }
             else {
                 counter2 = true;
-                getText= findViewById(R.id.levelTextViewOld);//To modify TextView once in the fragment
-                getText2=getText.getText().toString();
-                getText2=getText2.replaceAll("\\D+","");
+                //getText= findViewById(R.id.levelTextViewOld);//To modify TextView once in the fragment
+               // getText2=getText.getText().toString();
+                //getText2=getText2.replaceAll("\\D+","");
+                // hh = timeArray[0]; //https://stackoverflow.com/questions/34331637/how-to-convert-hhmmss-into-int
+                //        mm = timeArray[1];
+                //        ss = timeArray[2];
+                //        xp=exp;
+                //        Distance=distance;
                 Bundle bundle=new Bundle();
                 String tag = QuestFragment.class.getCanonicalName();
                 QuestFragment fragment = new QuestFragment();
                 bundle.putInt("xp", xp);
                 bundle.putString("mm",mm);
-                bundle.putString("lvl",getText2);
+                //bundle.putString("lvl",getText2);
                 bundle.putFloat("distance",Distance);
                 fragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.topPanel, fragment, tag).commit(); //stores and implementing a fragment
                 //https://stackoverflow.com/questions/4030928/extract-digits-from-a-string-in-java
             }
-
-
-
-
         }
         else //map fragment opens
         {
@@ -272,6 +272,13 @@ public class MapsActivity extends FragmentActivity implements
         float distance = values.getAsFloat(RWContentProvider.DISTANCE_RAN);
         String timeElapsed = values.getAsString(RWContentProvider.TIME_ELAPSED);
         String date = values.getAsString(RWContentProvider.DATE);
+        counter3=true;
+        String[] timeArray = timeElapsed.split(":");
+        hh = timeArray[0]; //https://stackoverflow.com/questions/34331637/how-to-convert-hhmmss-into-int
+        mm = timeArray[1];
+        ss = timeArray[2];
+        xp=exp;
+        Distance=distance;
 
         Log.i(TAG, "onEndButtonClicked: exp = " + exp);
         Log.i(TAG, "onEndButtonClicked: distance = " + distance);
