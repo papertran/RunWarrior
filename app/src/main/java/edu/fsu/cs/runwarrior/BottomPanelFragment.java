@@ -41,7 +41,6 @@ public class BottomPanelFragment extends Fragment {
         void onStartButtonClicked();
         void onQuestButtonClicked();
         void onAvatarButtonClicked();
-
     }
 
     @Override

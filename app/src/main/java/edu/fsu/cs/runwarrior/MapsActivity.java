@@ -3,8 +3,7 @@ package edu.fsu.cs.runwarrior;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
@@ -32,9 +31,10 @@ import java.util.ArrayList;
 
 
 public class MapsActivity extends FragmentActivity implements
-        BottomPanelFragment.BottomPanelFragmentListener,
-        BottomPanelStartRunFragment.BottomPanelFragmentStartRunListener,
-        MapFragment.MapFragmentListener {
+  BottomPanelFragment.BottomPanelFragmentListener,
+  BottomPanelStartRunFragment.BottomPanelFragmentStartRunListener,
+  MapFragment.MapFragmentListener,
+  UserProfileBottomPanel.OnUserProfilePanelAction {
     // https://www.youtube.com/watch?v=i22INe14JUc&t=16s
     // How to implement / use interfaces for fragment communication
 
@@ -53,8 +53,9 @@ public class MapsActivity extends FragmentActivity implements
     public static final String TRACKING_KEY = "TRACKING_KEY";
     public static final String DISTANCE_KEY = "DISTANCE_KEY";
     public static final String TIME_KEY = "TIME_KEY";
+    public static final String AVATAR_IMAGE = "AVATAR_IMAGE";
+
     private static final int GET_FROM_GALLERY = 3;
-    private static final String AVATAR_IMAGE = "AVATAR_IMAGE";
 
     private final String TAG = MapsActivity.class.getCanonicalName();
     private Uri imageUri;
@@ -75,18 +76,18 @@ public class MapsActivity extends FragmentActivity implements
         ArrayList<String> permissions = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED) {
+              PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
             }
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED) {
+              PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED) {
+              PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             }
-            String[] perms = permissions.toArray(new String[] {});
+            String[] perms = permissions.toArray(new String[]{});
             if (perms.length > 0) {
                 ActivityCompat.requestPermissions(this, perms, 0);
             }
@@ -101,8 +102,6 @@ public class MapsActivity extends FragmentActivity implements
             uploadButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT,
                                         MediaStore.Images.Media.INTERNAL_CONTENT_URI),
@@ -113,7 +112,6 @@ public class MapsActivity extends FragmentActivity implements
                                         MediaStore.Images.Media.INTERNAL_CONTENT_URI),
                                 GET_FROM_GALLERY);
                     }
-
                 }
             });
 
@@ -126,24 +124,65 @@ public class MapsActivity extends FragmentActivity implements
                     }
                 }
             });
-        } else {
-            this.imageUri = Uri.parse(settings.getString(AVATAR_IMAGE, ""));
-            setContentView(R.layout.main_ui);
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction trans = manager.beginTransaction();
-            MapFragment fragment = new MapFragment();
-            trans.add(R.id.topPanel, fragment, "MapFragment");
-
-            BottomPanelFragment bottomFragment = new BottomPanelFragment();
-            trans.add(R.id.bottomPanel, bottomFragment, "BottomFragment");
-            trans.commit();
         }
+        // user already exists/is logged in/has been created
+        else {
+            // load avatar image resource
+            this.imageUri = Uri.parse(settings.getString(AVATAR_IMAGE, ""));
+
+            // initialize UI to main view and setup fragment controller
+            setContentView(R.layout.main_ui);
+            loadFragmentPair(
+              new MapFragment(), "MapFragment",
+              new BottomPanelFragment(), "BottomPanelFragment"
+            );
+        }
+    }
+
+    // set the top and bottom panels to specified fragment arguments, allow any instances of fragments from Fragment-extended classes as args
+    private <T extends Fragment, U extends Fragment> void loadFragmentPair(T top, String topTag, U bottom, String bottomTag) {
+        // set top panel and allow back button
+        getSupportFragmentManager()
+          .beginTransaction()
+          // set top panel to `top` argument
+          .replace(R.id.topPanel, top, topTag)
+          .addToBackStack(null) // support back button
+          // set bottom panel to `bottom` argument
+          .replace(R.id.bottomPanel, bottom, bottomTag)
+          .addToBackStack(null)// support back button
+          .commit();
+    }
+
+    private UserProfile getUserProfileFragment() {
+       return (UserProfile) getSupportFragmentManager().findFragmentById(R.id.topPanel);
+    }
+
+    @Override
+    public void onUserProfilePanelRuns() {
+        getUserProfileFragment().showRuns();
+    }
+
+    @Override
+    public void onUserProfilePanelGraph() {
+        getUserProfileFragment().showGraph();
+    }
+
+    @Override
+    public void onUserProfilePanelClose() {
+        loadFragmentPair(
+          new MapFragment(), "MapFragment",
+          new BottomPanelFragment(), "BottomPanelFragment"
+        );
     }
 
     @Override
     public void onAvatarButtonClicked() {
         Log.i(TAG, "onAvatarButtonClicked");
-        //TODO implement onAvatarButonClicked
+
+        loadFragmentPair(
+          new UserProfile(), "UserProfileFragment",
+          new UserProfileBottomPanel(), "UserProfileBottomPanelFragment"
+        );
     }
 
     @Override
@@ -187,13 +226,12 @@ public class MapsActivity extends FragmentActivity implements
         float distance = values.getAsFloat(RWContentProvider.DISTANCE_RAN);
         String timeElapsed = values.getAsString(RWContentProvider.TIME_ELAPSED);
         String date = values.getAsString(RWContentProvider.DATE);
+
         Log.i(TAG, "onEndButtonClicked: exp = " + exp);
         Log.i(TAG, "onEndButtonClicked: distance = " + distance);
         Log.i(TAG, "onEndButtonClicked: time = " + timeElapsed);
         Log.i(TAG, "onEndButtonClicked: date = " + date);
-
     }
-
 
     @Override
     public void sendDistance(double distance, int seconds) {

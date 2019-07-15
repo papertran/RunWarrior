@@ -6,4 +6,41 @@
     <string name="read_permission">edu.fsu.cs.runwarrior.READ_PERMISION</string>
     <string name="write_permission">edu.fsu.cs.runwarrior.WRITE_PERMISION</string>
 
+    <string name="walk">Walking</string>
+    <string name="run">Running</string>
+    <string name="exc">What kind of exercise were you doing most often, and what is your average rate?</string>
+    <string name="weight">Weight:</string>
+    <string name="sub">Submit</string>
+
+    <string-array name="rng">
+        <item>5 mph (12 min mile)</item>
+        <item>5.2 mph (11.5 min mile)</item>
+        <item>6 mph (10 min mile)</item>
+        <item>6.7 mph (9 min mile)</item>
+        <item>7 mph (8.5 min mile)</item>
+        <item>7.5 mph (8 min mile)</item>
+        <item>8 mph (7.5 min mile)</item>
+        <item>8.6 mph (7 min mile)</item>
+        <item>9 mph (6.5 min mile)</item>
+        <item>10 mph (6 min mile)</item>
+        <item>10.9 mph (5.5 min mile)</item>
+        <item>Running stairs</item>
+    </string-array>
+
+    <string-array name="wkg">
+        <item>2 mph, level slow pace, firm surface</item>
+        <item>2.5 mph, firm surface</item>
+        <item>3 mph, level, moderate pace, firm surface</item>
+        <item>3.5 - 4 mph, level, brisk pace, firm surface</item>
+        <item>4.5 mph, level, firm surface, very very brisk pace</item>
+        <item>Racewalking</item>
+    </string-array>
+
+    <!-- The previous two arrays taken word for word from https://www.hss.edu/conditions_burning-calories-with-exercise-calculating-estimated-energy-expenditure.asp?fbclid=IwAR3eY2ru-ypCfpPLzGQgSq951CHVEOVz97cbc0MoHWxcHEnZTRAiaYSEaaU -->
+        <!-- Used to calculate the amount of calories burned given the users weight, time of the runs, a multiplier derived from their average rate, and multiplying all of that by .0175 -->
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
