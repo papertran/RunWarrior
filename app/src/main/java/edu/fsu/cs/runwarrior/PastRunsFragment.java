@@ -2,31 +2,22 @@ package edu.fsu.cs.runwarrior;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class PastRunsFragment extends Fragment {
     public PastRunsFragment() { }
-
-    public static PastRunsFragment newInstance() {
-        PastRunsFragment fragment = new PastRunsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +42,9 @@ public class PastRunsFragment extends Fragment {
             }
         }
         c.close();
+
+        // reverse array, newest first
+        Collections.reverse(pastRunsData);
 
         // Set adapter to listview
         ArrayAdapter<String> pastRunsViewAdapter = new ArrayAdapter<String>(

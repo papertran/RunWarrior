@@ -29,34 +29,33 @@
             android:layout_marginRight="20dp"/>
         <TextView
             android:id="@+id/userProfile_name"
+            android:textStyle="italic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User Name"
-            android:textSize="28sp"/>
+            android:textSize="34sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/userProfile_row_weight"
         android:layout_below="@id/userProfile_row_avatar"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="10sp"
-        android:layout_marginStart="10sp"
         android:layout_marginRight="10sp"
-        android:layout_marginEnd="10sp"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="28sp"
-            android:text="Weight:"/>
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:text="Weight"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:id="@+id/userProfile_weight"
             android:text="160 lbs"/>
     </LinearLayout>
@@ -64,19 +63,18 @@
     <LinearLayout
         android:id="@+id/userProfile_row_stats"
         android:layout_below="@id/userProfile_row_weight"
-        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10sp"
-        android:layout_marginStart="10sp"
         android:layout_marginRight="10sp"
-        android:layout_marginEnd="10sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:textSize="28sp"
-            android:text="Miles Ran:"/>
+            android:text="Distance"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,7 +88,7 @@
     <FrameLayout
         android:id="@+id/userProfile_row_widget"
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userProfile_row_stats"
         >
