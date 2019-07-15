@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class QuestFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_quest, container, false);
-        SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences(MapsActivity.PREFS_NAME, Context.MODE_PRIVATE);
         time=pref.getInt("Time",-1);
         requiredLvlExp=pref.getInt("Requiredxp",-1);
         km=pref.getFloat("Miles",-1);
@@ -115,13 +116,13 @@ public class QuestFragment extends Fragment {
        // updatelvl.setText("Level "+lvlString); //finds textview of the lvl up and then modifies it
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext()); //creating preference
         SharedPreferences.Editor editor = preferences.edit();
+        Log.i("QUESTFRAGMENT", "onCreateView: " + lvlString);
         editor.putInt("Requiredxp", requiredLvlExp);
         editor.putInt("Time", time);
         editor.putFloat("Miles", km);
         editor.putString("level",lvlString);
         //Toast.makeText(getActivity(),requiredLvlExp,Toast.LENGTH_LONG).show();
         editor.apply(); //store the sharepreference
-
 
 
         return v;
