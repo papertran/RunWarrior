@@ -72,7 +72,7 @@ public class UserProfile extends Fragment {
 
     void showGraph() {
         Log.i("switch to graph", "meme");
-        //setWidget(new PastRunFragment(), "PastRuns");
+        setWidget(new GraphFragment(), "Graph");
     }
 
     void showRuns() {
