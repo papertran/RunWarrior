@@ -239,7 +239,7 @@ public class MapFragment extends Fragment {
         LatLng startLatLng = new LatLng(lat_a, lng_a);
         LatLng endLatLng = new LatLng(lat_b, lng_b);
         double distance = SphericalUtil.computeDistanceBetween(startLatLng, endLatLng);
-        return (float) (distance /1000);
+        return (float) (distance);
 //        double earthRadius = 3958.75;
 //        double latDiff = Math.toRadians(lat_b-lat_a);
 //        double lngDiff = Math.toRadians(lng_b-lng_a);

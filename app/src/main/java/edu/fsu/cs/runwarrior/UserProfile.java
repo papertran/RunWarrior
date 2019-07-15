@@ -62,7 +62,7 @@ public class UserProfile extends Fragment {
         // set TextViews' contents with user-specific details
         ((TextView)root.findViewById(R.id.userProfile_name)).setText(userName);
         ((TextView)root.findViewById(R.id.userProfile_weight)).setText(userWeight + " lbs");
-        ((TextView)root.findViewById(R.id.userProfile_totalDistanceRan)).setText(String.format("%.2f", userDistanceRan) + " m");
+        ((TextView)root.findViewById(R.id.userProfile_totalDistanceRan)).setText(String.format("%.2f", userDistanceRan) + "m");
 
         Bitmap bitmap = null;
         try {

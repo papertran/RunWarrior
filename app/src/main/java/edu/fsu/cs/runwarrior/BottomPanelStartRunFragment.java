@@ -68,7 +68,7 @@ public class BottomPanelStartRunFragment extends Fragment {
         endButton = (Button) rootView.findViewById(R.id.endButton);
 
         if(distance != 0 || mTime != null) {
-            distanceTextVIew.setText(String.format("%.2f", distance));
+            distanceTextVIew.setText(String.format("%.2f", distance) + "m");
             timeTextView.setText(mTime.toString());
             expTextView.setText("" + exp);
         }
