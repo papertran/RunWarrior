@@ -41,7 +41,8 @@ public class UserProfile extends Fragment {
         SharedPreferences settings = getActivity().getSharedPreferences(MapsActivity.PREFS_NAME, Context.MODE_PRIVATE);
         String userName = settings.getString(MapsActivity.USER_NAME, "Name not set");
         String userAvatar = settings.getString(MapsActivity.AVATAR_IMAGE, null);
-        String level = settings.getString("level","1");
+        String level=settings.getString("levelup","0");
+      // = settings.getString("level","1");
         Log.i("level", "onCreateView: " + level);
         float userWeight = settings.getFloat(MapsActivity.USER_WEIGHT, 0);
         float userDistanceRan = 0;

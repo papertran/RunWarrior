@@ -47,26 +47,27 @@ public class QuestFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_quest, container, false);
-        SharedPreferences pref = getActivity().getSharedPreferences(MapsActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
         time=pref.getInt("Time",-1);
         requiredLvlExp=pref.getInt("Requiredxp",-1);
         m=pref.getFloat("Miles",-1);
-        //lvlString=pref.getString("level","-1");
+        lvlString=pref.getString("levelup","-1");
        // Toast.makeText(getActivity(), time+ " "+requiredLvlExp,Toast.LENGTH_LONG).show();
-
-
-        if (time==-1||requiredLvlExp==-1||m==-1) {
+        if (time==-1||requiredLvlExp==-1||m==-1||lvlString=="-1") {
             time = 10;
             m = 1000;
             requiredLvlExp = 200;
             lvlString="0";
+            Log.i("TAG",lvlString);
         }
+        Log.i("TAG2",lvlString);
         Bundle bundle = getArguments();
         if(bundle!=null)
         {
             minute=bundle.getString("mm","null");
-            lvlString = bundle.getString("lvl", "-1");
+           // lvlString = bundle.getString("lvl", "-1");
             initaltime=Integer.parseInt(minute);
+            Log.i("TAG3",lvlString);
             initalexp=bundle.getInt("xp",-1);
             initialmiles=bundle.getFloat("distance",-1);
             // Toast.makeText(getActivity(),"0",Toast.LENGTH_LONG).show();
@@ -104,6 +105,7 @@ public class QuestFragment extends Fragment {
         }
         if (initalexp >= requiredLvlExp) //comparing experience with required lvlexp;
         {
+            Log.i("TAG4",lvlString);
            // Toast.makeText(getActivity(),"Level Up",Toast.LENGTH_LONG);
             do {
                 lvlString = levelup(Integer.parseInt(lvlString));
@@ -119,16 +121,18 @@ public class QuestFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, quest); //creates adaptor
         Quest.setAdapter(adapter); //prints listview
       //  TextView updatelvl = (TextView) getActivity().findViewById(R.id.levelTextViewOld);
-       // updatelvl.setText("Level "+lvlString); //finds textview of the lvl up and then modifies it
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext()); //creating preference
-        SharedPreferences.Editor editor = preferences.edit();
+//       // updatelvl.setText("Level "+lvlString); //finds textview of the lvl up and then modifies it
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext()); //creating preference
+//        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences prefs= getActivity().getSharedPreferences(MapsActivity.PREFS_NAME, Context.MODE_PRIVATE);
         Log.i("QUESTFRAGMENT", "onCreateView: " + lvlString);
-        editor.putInt("Requiredxp", requiredLvlExp);
-        editor.putInt("Time", time);
-        editor.putFloat("Miles", m);
-        editor.putString("level1",lvlString);
+        prefs.edit().putInt("Requiredxp", requiredLvlExp).apply();
+        prefs.edit().putInt("Time", time).apply();
+        prefs.edit().putFloat("Miles", m).apply();
+        prefs.edit().putString("levelup",lvlString).apply();
         //Toast.makeText(getActivity(),requiredLvlExp,Toast.LENGTH_LONG).show();
-        editor.apply(); //store the sharepreference
+        //editor.commit(); //store the sharepreference
+
 
 
         return v;
